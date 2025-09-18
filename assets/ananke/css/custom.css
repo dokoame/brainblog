@@ -1,61 +1,53 @@
-/* 1) Google Fonts を読み込み */
-@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&display=swap");
-
-/* 2) 全体のフォントを Zen Old Mincho に */
-:root{
-  --site-font: "Zen Old Mincho", "Hiragino Mincho ProN", "游明朝", YuMincho, "MS PMincho", serif;
-}
-html, body, input, textarea, button {
-  font-family: var(--site-font);
-}
-
-/* 3) 投稿タイトルと本文をセンターに表示（文字も中央揃え） */
-main article {
-  margin-inline: auto;        /* ブロック自体を中央に配置 */
-  text-align: center;         /* 文字を中央揃え */
-  max-width: 46rem;           /* 読みやすい幅に調整（お好みで） */
-}
-
-/* Ananke が使う本文周りのクラスも一応ケア */
-main article .content, main article .markdown, main article .nested-copy-line-height {
-  text-align: inherit;
-  margin-inline: auto;
-}
-/* --- Zen Old Mincho（明朝） --- */
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap');
-:root { --jp-mincho: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'MS PMincho', serif; }
+:root { --jp-mincho: 'Zen Old Mincho','Hiragino Mincho ProN','Yu Mincho','YuMincho','MS PMincho',serif; }
 html, body { font-family: var(--jp-mincho); }
 
-/* --- タイトル（H1）を大きく・中央 --- */
-article h1 {
+/* ── 単一記事ページの体裁 ───────────────────────── */
+/* タイトルを大きく中央に */
+.single article h1 {
   text-align: center;
   font-weight: 700;
   letter-spacing: .04em;
   line-height: 1.35;
   font-size: clamp(2.2rem, 3.6vw, 3.2rem);
-  margin-block: 1.8rem 2.4rem;
+  margin-block: 1.8rem 2.0rem;
 }
 
-/* --- 記事コンテナを中央配置（本文は左組のまま可読性重視） --- */
-article {
-  max-width: 48rem;          /* 横幅を絞って読みやすく */
+/* 上部の「POSTS」や日付などメタ情報を非表示（Ananke向けに広めに抑止） */
+.single article header time,
+.single article header .post-meta,
+.single article header .byline,
+.single article header .tracked,
+.single article header .ttu,
+.single article header .f6 {
+  display: none !important;
+}
+
+/* 本文コンテナを中央配置＋横幅を絞る（読みやすさ重視） */
+.single article {
+  max-width: 48rem;
   margin-inline: auto;
 }
 
-/* もし前回「本文も中央寄せ」にしていた場合の上書き */
+/* もし以前「本文を中央揃え」にしていた場合の上書き（本文は左組に戻す） */
+.single article, .single article p, .single article li { text-align: left; }
 
+/* 画像・表・コードは中央に */
+.single article img, .single article pre, .single article table {
+  display: block; margin-inline: auto;
+}
 
-/* --- 会話レイアウト（名前：セリフ） --- */
-.dialogue {
-  display: block;
-  margin-inline: auto;
+/* ── 会話レイアウト（名前：セリフの2カラム） ─────────── */
+.dialogue { 
+  margin: 0 auto 2.6rem;
   line-height: 2.2;
   font-size: 1.125rem;
 }
 .dialogue .line {
   display: grid;
-  grid-template-columns: 7.5em 1fr;  /* 左：名前／右：セリフ */
-  column-gap: 1.6em;
+  grid-template-columns: 8em 1fr;   /* ←左：名前の幅はここで調整 */
+  column-gap: 1.8em;
   margin: .35em 0;
 }
 .dialogue .who {
@@ -64,13 +56,4 @@ article {
   letter-spacing: .03em;
   white-space: nowrap;
 }
-.dialogue .say {
-  display: block;
-  text-align: left;
-  word-break: break-word;     /* 日本語の改行を自然に */
-}
-
-/* 画像や表なども中央に */
-article img, article pre, article table {
-  display: block; margin-inline: auto;
-}
+.dialogue .say { text-align: left; word-break: break-word; }
