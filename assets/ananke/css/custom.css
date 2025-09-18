@@ -1,0 +1,23 @@
+/* 1) Google Fonts を読み込み */
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700;900&display=swap");
+
+/* 2) 全体のフォントを Zen Old Mincho に */
+:root{
+  --site-font: "Zen Old Mincho", "Hiragino Mincho ProN", "游明朝", YuMincho, "MS PMincho", serif;
+}
+html, body, input, textarea, button {
+  font-family: var(--site-font);
+}
+
+/* 3) 投稿タイトルと本文をセンターに表示（文字も中央揃え） */
+main article {
+  margin-inline: auto;        /* ブロック自体を中央に配置 */
+  text-align: center;         /* 文字を中央揃え */
+  max-width: 46rem;           /* 読みやすい幅に調整（お好みで） */
+}
+
+/* Ananke が使う本文周りのクラスも一応ケア */
+main article .content, main article .markdown, main article .nested-copy-line-height {
+  text-align: inherit;
+  margin-inline: auto;
+}
