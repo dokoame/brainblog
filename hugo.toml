@@ -1,4 +1,7 @@
 baseURL = 'http://localhost:1313/'
 languageCode = 'ja-jp'
-title = 'My Hugo Blog'
+title = '今日もどこかで雨'
 theme = 'ananke'
+
+# ページネーション（1ページに何件表示するか）
+paginate = 1
