@@ -43,7 +43,7 @@ article {
 }
 
 /* もし前回「本文も中央寄せ」にしていた場合の上書き */
-article, article p, article li { text-align: left; }
+
 
 /* --- 会話レイアウト（名前：セリフ） --- */
 .dialogue {
