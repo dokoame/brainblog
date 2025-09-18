@@ -5,6 +5,7 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+# Pages デプロイに必要な権限
 permissions:
   contents: read
   pages: write
@@ -21,10 +22,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive   # ← Ananke等のテーマをサブモジュールで入れた人は必須
+          submodules: recursive   # テーマをサブモジュール導入している場合に必須
           fetch-depth: 0
 
-      # Hugo（Extended）を入れてバージョンを表示
+      # Pages をセットアップ（未有効でも enable できるようにする）
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # Hugo (extended) をインストール
       - name: Install Hugo (extended)
         run: |
           HUGO_VERSION=0.128.0
@@ -33,24 +41,23 @@ jobs:
           sudo mv hugo /usr/local/bin/hugo
           hugo version
 
-      # GitHub Pages 用に構成値を取得
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
-      # 本番ビルド（PagesのURLをそのままbaseURLにしてリンク崩れを防止）
+      # 本番ビルド：Pages の base_url をそのまま適用
       - name: Build with Hugo
         run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-      # できあがったサイトをPagesに渡す
+      # 出力(public/)を Pages 用アーティファクトに梱包
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
