@@ -4,4 +4,21 @@ title = '今日もどこかで雨'
 theme = 'ananke'
 
 # ページネーション（1ページに何件表示するか）
-paginate = 1
+paginate = 10
+
+
+[menu]
+  [[menu.main]]
+    name = 'Home'
+    url  = '/'
+    weight = 1
+
+  [[menu.main]]
+    name = 'Posts'
+    url  = '/posts/'
+    weight = 2
+
+  [[menu.main]]
+    name = 'About'
+    url  = '/about/'
+    weight = 3
